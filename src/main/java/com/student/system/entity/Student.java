@@ -31,7 +31,10 @@ public class Student implements Serializable {
     private Integer age;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL,orphanRemoval = true)
-    private Set<Subject> subject = new HashSet<>();
+    @ManyToMany
+    @JoinTable(name = "student_subject",
+    joinColumns = @JoinColumn(name = "usn"),
+    inverseJoinColumns = @JoinColumn(name = "id"))
+    private Set<Subject> subjects = new HashSet<>();
 
 }

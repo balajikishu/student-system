@@ -1,0 +1,13 @@
+com\student\system\service\SubjectService.class
+com\student\system\StudentSystemApplication.class
+com\student\system\exception\StudentException.class
+com\student\system\exception\SubjectException.class
+com\student\system\repository\SubjectRepository.class
+com\student\system\repository\StudentRepository.class
+com\student\system\entity\Student.class
+com\student\system\entity\Subject.class
+com\student\system\service\StudentService.class
+com\student\system\config\SpringFoxConfig.class
+com\student\system\config\SwaggerUiWebMvcConfigurer.class
+com\student\system\controller\SubjectController.class
+com\student\system\controller\StudentController.class

@@ -4,6 +4,7 @@ import com.student.system.entity.Student;
 import com.student.system.exception.StudentException;
 import com.student.system.repository.StudentRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,6 +15,7 @@ import java.util.Optional;
 @Service
 public class StudentService {
 
+    @Autowired
     private StudentRepository studentRepository;
 
     public List<Student> listAllStudents() throws StudentException {
@@ -35,7 +37,7 @@ public class StudentService {
                     student = optionalStudent.get();
                 } else {
                     log.error("No Student available for the USN : {}", usn);
-                    new Exception("No Student available for the USN :" + usn);
+                    new StudentException("No Student available for the USN :" + usn);
                 }
             }
         } catch (Exception exp) {
@@ -57,27 +59,49 @@ public class StudentService {
             }
         } catch (Exception exp) {
             log.error("Error while saving the student: {}", exp);
-            new Exception("Error while saving the student");
+            new StudentException("Error while saving the student");
         }
         return student;
     }
 
     public void deleteStudentByUSN(String usn) throws StudentException {
         try {
-                if(Objects.nonNull(usn)) {
-                    Optional<Student> optionalStudent = studentRepository.findById(usn);
-                    if (optionalStudent.isPresent()) {
-                       Student student = optionalStudent.get();
-                       studentRepository.delete(student);
-                    } else {
-                        log.error("No Student available for the USN : {}", usn);
-                        new Exception("No Student available for the USN :" + usn);
-                    }
+            if (Objects.nonNull(usn)) {
+                Optional<Student> optionalStudent = studentRepository.findById(usn);
+                if (optionalStudent.isPresent()) {
+                    Student student = optionalStudent.get();
+                    studentRepository.delete(student);
+                } else {
+                    log.error("No Student available for the USN : {}", usn);
+                    new StudentException("No Student available for the USN :" + usn);
                 }
+            }
         } catch (Exception exp) {
             log.error("Error while deleting a student for USN :{} : {}", usn, exp);
-            new Exception("Error while deleting a student for USN:" + usn);
+            new StudentException("Error while deleting a student for USN:" + usn);
         }
     }
+
+    public Student updateStudent(Student studentInfo) throws StudentException {
+        Student student = null;
+        try {
+            if (Objects.nonNull(studentInfo)) {
+                Optional<Student> optionalStudent = studentRepository.findById(studentInfo.getUsn());
+                if (optionalStudent.isPresent()) {
+                    student = optionalStudent.get();
+                    student.setUsn(studentInfo.getUsn());
+                    student.setAge(studentInfo.getAge());
+                    student.setFirstName(studentInfo.getFirstName());
+                    student.setLastName(studentInfo.getLastName());
+                    student = studentRepository.save(student);
+                }
+            }
+        } catch (Exception exp) {
+            log.error("Error while updating the student: {}", exp);
+            new StudentException("Error while updating the student");
+        }
+        return student;
+    }
+
 
 }
