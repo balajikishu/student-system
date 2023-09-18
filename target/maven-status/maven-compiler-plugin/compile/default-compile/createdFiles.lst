@@ -7,7 +7,6 @@ com\student\system\repository\StudentRepository.class
 com\student\system\entity\Student.class
 com\student\system\entity\Subject.class
 com\student\system\service\StudentService.class
-com\student\system\config\SpringFoxConfig.class
 com\student\system\config\SwaggerUiWebMvcConfigurer.class
 com\student\system\controller\SubjectController.class
 com\student\system\controller\StudentController.class
