@@ -20,6 +20,7 @@ services:
       - postgres
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/postgres
+      SPRING_DATASOURCE_DIVER_NAME: org.postgresql.Driver
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: password
 
