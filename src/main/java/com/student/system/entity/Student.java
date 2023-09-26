@@ -31,10 +31,9 @@ public class Student implements Serializable {
     private Integer age;
 
     @JsonIgnore
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "student_subject",
     joinColumns = @JoinColumn(name = "usn"),
     inverseJoinColumns = @JoinColumn(name = "id"))
     private Set<Subject> subjects = new HashSet<>();
-
 }

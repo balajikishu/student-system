@@ -1,24 +1,20 @@
 package com.student.system.service;
 
-import com.student.system.entity.Student;
 import com.student.system.entity.Subject;
 import com.student.system.exception.SubjectException;
-import com.student.system.repository.StudentRepository;
 import com.student.system.repository.SubjectRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.List;
+import java.util.Objects;
 
 @Slf4j
 @Service
 public class SubjectService {
     @Autowired
     SubjectRepository subjectRepository;
-
-    @Autowired
-    StudentRepository studentRepository;
 
     public List<Subject> listAllSubjects() throws SubjectException {
         List<Subject> subjectList = null;
@@ -63,53 +59,5 @@ public class SubjectService {
             throw new SubjectException(exception.getMessage());
         }
     }
-
-
-    public void addSubjectsForStudent(String[] subjectList, String usn) throws SubjectException {
-        try {
-            if (Objects.nonNull(subjectList) && subjectList.length > 0 && Objects.nonNull(usn)) {
-                Optional<Student> studentOptional = studentRepository.findById(usn);
-                if (studentOptional.isEmpty()) {
-                    throw new SubjectException("No Student of USN : " + usn + " to map the Subjects");
-                } else {
-                    Student student = studentOptional.get();
-                    Set<Subject> subjectSet = new HashSet<>();
-                    for (String subjectName : subjectList) {
-                        Subject subject = subjectRepository.findBySubjectName(subjectName);
-                        subjectSet.add(subject);
-                    }
-                    student.setSubjects(subjectSet);
-                    student = studentRepository.save(student);
-                }
-            }
-        } catch (Exception exception) {
-            log.error("Error while mapping the subject :{}", exception);
-            throw new SubjectException(exception.getMessage());
-        }
-    }
-
-
-    public void removeSubjectsForStudent(String[] subjectList, String usn) throws SubjectException {
-        try {
-            if (Objects.nonNull(subjectList) && subjectList.length > 0 && Objects.nonNull(usn)) {
-                Optional<Student> studentOptional = studentRepository.findById(usn);
-                if (studentOptional.isEmpty()) {
-                    throw new SubjectException("No Student of USN : " + usn + " to map the Subjects");
-                } else {
-                    Student student = studentOptional.get();
-                    Set<Subject> subjectSet = new HashSet<>();
-                    for (String subjectName : subjectList) {
-                        Subject subject = subjectRepository.findBySubjectName(subjectName);
-                        subjectSet.remove(subject);
-                    }
-                    student = studentRepository.save(student);
-                }
-            }
-        } catch (Exception exception) {
-            log.error("Error while unmapping the subject :{}", exception);
-            throw new SubjectException(exception.getMessage());
-        }
-    }
-
 
 }

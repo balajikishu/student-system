@@ -6,13 +6,13 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
 
 @Data
 @Entity(name="subject")
 public class Subject implements Serializable {
 
-    @JsonIgnore
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
@@ -23,6 +23,6 @@ public class Subject implements Serializable {
     String subjectName;
 
     @JsonIgnore
-    @ManyToMany(mappedBy = "subjects")
-    private Set<Student> student;
+    @ManyToMany(mappedBy = "subjects",fetch = FetchType.LAZY)
+    private Set<Student> students = new HashSet<>();
 }

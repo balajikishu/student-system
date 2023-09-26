@@ -43,25 +43,4 @@ public class SubjectController {
         }
     }
 
-    @PutMapping("/map")
-    ResponseEntity addSubjectsForStudents(@RequestBody String[] subjects, @RequestParam("usn") String usn) {
-        try {
-            subjectService.addSubjectsForStudent(subjects, usn);
-            return new ResponseEntity("Subjects Added", HttpStatus.OK);
-        } catch (Exception | SubjectException e) {
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
-    @PutMapping("/un-map")
-    ResponseEntity removeSubjectsForStudents(@RequestBody String[] subjects, @RequestParam("usn") String usn) {
-        try {
-            subjectService.removeSubjectsForStudent(subjects, usn);
-            return new ResponseEntity("Subjects Removed", HttpStatus.OK);
-        } catch (Exception | SubjectException e) {
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
-
 }
